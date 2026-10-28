@@ -47,86 +47,90 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 const exerciseLibrary = [
-  { id:'1', name:'Жим штанги лёжа', mg:'Грудь', eq:'Штанга' },
-  { id:'2', name:'Жим гантелей лёжа', mg:'Грудь', eq:'Гантели' },
-  { id:'3', name:'Жим гантелей наклон', mg:'Грудь', eq:'Гантели' },
-  { id:'4', name:'Разводка гантелей', mg:'Грудь', eq:'Гантели' },
-  { id:'5', name:'Сведения в кроссовере', mg:'Грудь', eq:'Кроссовер' },
-  { id:'6', name:'Отжимания на брусьях', mg:'Грудь', eq:'Брусья' },
-  { id:'7', name:'Жим в хаммере', mg:'Грудь', eq:'Тренажёр' },
-  { id:'8', name:'Становая тяга', mg:'Спина', eq:'Штанга' },
-  { id:'9', name:'Подтягивания', mg:'Спина', eq:'Турник' },
-  { id:'10', name:'Тяга штанги в наклоне', mg:'Спина', eq:'Штанга' },
-  { id:'11', name:'Тяга верхнего блока', mg:'Спина', eq:'Блок' },
-  { id:'12', name:'Тяга горизонтального блока', mg:'Спина', eq:'Блок' },
-  { id:'13', name:'Тяга гантели в наклоне', mg:'Спина', eq:'Гантели' },
-  { id:'14', name:'Гиперэкстензия', mg:'Спина', eq:'Тренажёр' },
-  { id:'15', name:'Шраги', mg:'Спина', eq:'Гантели' },
-  { id:'16', name:'Приседания со штангой', mg:'Ноги', eq:'Штанга' },
-  { id:'17', name:'Жим ногами', mg:'Ноги', eq:'Тренажёр' },
-  { id:'18', name:'Разгибание ног', mg:'Ноги', eq:'Тренажёр' },
-  { id:'19', name:'Сгибание ног', mg:'Ноги', eq:'Тренажёр' },
-  { id:'20', name:'Выпады с гантелями', mg:'Ноги', eq:'Гантели' },
-  { id:'21', name:'Подъём на носки', mg:'Ноги', eq:'Тренажёр' },
-  { id:'22', name:'Фронтальные приседания', mg:'Ноги', eq:'Штанга' },
-  { id:'23', name:'Жим штанги стоя', mg:'Плечи', eq:'Штанга' },
-  { id:'24', name:'Жим гантелей сидя', mg:'Плечи', eq:'Гантели' },
-  { id:'25', name:'Махи гантелями в стороны', mg:'Плечи', eq:'Гантели' },
-  { id:'26', name:'Махи в наклоне', mg:'Плечи', eq:'Гантели' },
-  { id:'27', name:'Тяга к подбородку', mg:'Плечи', eq:'Штанга' },
-  { id:'28', name:'Жим Арнольда', mg:'Плечи', eq:'Гантели' },
-  { id:'29', name:'Подъём штанги на бицепс', mg:'Руки', eq:'Штанга' },
-  { id:'30', name:'Подъём гантелей на бицепс', mg:'Руки', eq:'Гантели' },
-  { id:'31', name:'Молотки', mg:'Руки', eq:'Гантели' },
-  { id:'32', name:'Французский жим', mg:'Руки', eq:'Штанга' },
-  { id:'33', name:'Разгибание на блоке', mg:'Руки', eq:'Блок' },
-  { id:'34', name:'Отжимания узким хватом', mg:'Руки', eq:'Собственный вес' },
-  { id:'35', name:'Концентрированный подъём', mg:'Руки', eq:'Гантели' },
-  { id:'36', name:'Скручивания', mg:'Пресс', eq:'Собственный вес' },
-  { id:'37', name:'Подъём ног в висе', mg:'Пресс', eq:'Турник' },
-  { id:'38', name:'Планка', mg:'Пресс', eq:'Собственный вес' },
-  { id:'39', name:'Русский твист', mg:'Пресс', eq:'Гантели' },
-  { id:'40', name:'Скручивания на блоке', mg:'Пресс', eq:'Блок' },
-  { id:'41', name:'Ягодичный мост', mg:'Ягодицы', eq:'Штанга' },
-  { id:'42', name:'Румынская тяга', mg:'Ягодицы', eq:'Штанга' },
-  { id:'43', name:'Отведение ноги в кроссовере', mg:'Ягодицы', eq:'Кроссовер' },
-  { id:'44', name:'Болгарские выпады', mg:'Ягодицы', eq:'Гантели' },
-  { id:'45', name:'Жим ногами широкий', mg:'Ягодицы', eq:'Тренажёр' },
+  // Силовые - Грудь
+  { id:'1', name:'Жим штанги лёжа', mg:'Грудь', eq:'Штанга', type:'strength' },
+  { id:'2', name:'Жим гантелей лёжа', mg:'Грудь', eq:'Гантели', type:'strength' },
+  { id:'3', name:'Жим гантелей наклон', mg:'Грудь', eq:'Гантели', type:'strength' },
+  { id:'4', name:'Разводка гантелей', mg:'Грудь', eq:'Гантели', type:'strength' },
+  { id:'5', name:'Сведения в кроссовере', mg:'Грудь', eq:'Кроссовер', type:'strength' },
+  { id:'6', name:'Отжимания на брусьях', mg:'Грудь', eq:'Брусья', type:'strength' },
+  { id:'7', name:'Жим в хаммере', mg:'Грудь', eq:'Тренажёр', type:'strength' },
+  // Спина
+  { id:'8', name:'Становая тяга', mg:'Спина', eq:'Штанга', type:'strength' },
+  { id:'9', name:'Подтягивания', mg:'Спина', eq:'Турник', type:'strength' },
+  { id:'10', name:'Тяга штанги в наклоне', mg:'Спина', eq:'Штанга', type:'strength' },
+  { id:'11', name:'Тяга верхнего блока', mg:'Спина', eq:'Блок', type:'strength' },
+  { id:'12', name:'Тяга горизонтального блока', mg:'Спина', eq:'Блок', type:'strength' },
+  { id:'13', name:'Тяга гантели в наклоне', mg:'Спина', eq:'Гантели', type:'strength' },
+  { id:'14', name:'Гиперэкстензия', mg:'Спина', eq:'Тренажёр', type:'strength' },
+  { id:'15', name:'Шраги', mg:'Спина', eq:'Гантели', type:'strength' },
+  // Ноги
+  { id:'16', name:'Приседания со штангой', mg:'Ноги', eq:'Штанга', type:'strength' },
+  { id:'17', name:'Жим ногами', mg:'Ноги', eq:'Тренажёр', type:'strength' },
+  { id:'18', name:'Разгибание ног', mg:'Ноги', eq:'Тренажёр', type:'strength' },
+  { id:'19', name:'Сгибание ног', mg:'Ноги', eq:'Тренажёр', type:'strength' },
+  { id:'20', name:'Выпады с гантелями', mg:'Ноги', eq:'Гантели', type:'strength' },
+  { id:'21', name:'Подъём на носки', mg:'Ноги', eq:'Тренажёр', type:'strength' },
+  { id:'22', name:'Фронтальные приседания', mg:'Ноги', eq:'Штанга', type:'strength' },
+  // Плечи
+  { id:'23', name:'Жим штанги стоя', mg:'Плечи', eq:'Штанга', type:'strength' },
+  { id:'24', name:'Жим гантелей сидя', mg:'Плечи', eq:'Гантели', type:'strength' },
+  { id:'25', name:'Махи гантелями в стороны', mg:'Плечи', eq:'Гантели', type:'strength' },
+  { id:'26', name:'Махи в наклоне', mg:'Плечи', eq:'Гантели', type:'strength' },
+  { id:'27', name:'Тяга к подбородку', mg:'Плечи', eq:'Штанга', type:'strength' },
+  { id:'28', name:'Жим Арнольда', mg:'Плечи', eq:'Гантели', type:'strength' },
+  // Руки
+  { id:'29', name:'Подъём штанги на бицепс', mg:'Руки', eq:'Штанга', type:'strength' },
+  { id:'30', name:'Подъём гантелей на бицепс', mg:'Руки', eq:'Гантели', type:'strength' },
+  { id:'31', name:'Молотки', mg:'Руки', eq:'Гантели', type:'strength' },
+  { id:'32', name:'Французский жим', mg:'Руки', eq:'Штанга', type:'strength' },
+  { id:'33', name:'Разгибание на блоке', mg:'Руки', eq:'Блок', type:'strength' },
+  { id:'34', name:'Отжимания узким хватом', mg:'Руки', eq:'Собственный вес', type:'strength' },
+  { id:'35', name:'Концентрированный подъём', mg:'Руки', eq:'Гантели', type:'strength' },
+  // Пресс
+  { id:'36', name:'Скручивания', mg:'Пресс', eq:'Собственный вес', type:'strength' },
+  { id:'37', name:'Подъём ног в висе', mg:'Пресс', eq:'Турник', type:'strength' },
+  { id:'38', name:'Планка', mg:'Пресс', eq:'Собственный вес', type:'strength' },
+  { id:'39', name:'Русский твист', mg:'Пресс', eq:'Гантели', type:'strength' },
+  { id:'40', name:'Скручивания на блоке', mg:'Пресс', eq:'Блок', type:'strength' },
+  // Ягодицы
+  { id:'41', name:'Ягодичный мост', mg:'Ягодицы', eq:'Штанга', type:'strength' },
+  { id:'42', name:'Румынская тяга', mg:'Ягодицы', eq:'Штанга', type:'strength' },
+  { id:'43', name:'Отведение ноги в кроссовере', mg:'Ягодицы', eq:'Кроссовер', type:'strength' },
+  { id:'44', name:'Болгарские выпады', mg:'Ягодицы', eq:'Гантели', type:'strength' },
+  { id:'45', name:'Жим ногами широкий', mg:'Ягодицы', eq:'Тренажёр', type:'strength' },
+  // КАРДИО
+  { id:'46', name:'Беговая дорожка', mg:'Кардио', eq:'Тренажёр', type:'cardio' },
+  { id:'47', name:'Велотренажёр', mg:'Кардио', eq:'Тренажёр', type:'cardio' },
+  { id:'48', name:'Эллипсоид', mg:'Кардио', eq:'Тренажёр', type:'cardio' },
+  { id:'49', name:'Гребной тренажёр', mg:'Кардио', eq:'Тренажёр', type:'cardio' },
+  { id:'50', name:'Степпер', mg:'Кардио', eq:'Тренажёр', type:'cardio' },
+  { id:'51', name:'Скакалка', mg:'Кардио', eq:'Собственный вес', type:'cardio' },
 ];
 
-const mgIcons = {'Грудь':'🫁','Спина':'🔙','Ноги':'🦵','Плечи':'💪','Руки':'🤜','Пресс':'🎯','Ягодицы':'🍑'};
+const mgIcons = {'Грудь':'🫁','Спина':'🔙','Ноги':'🦵','Плечи':'💪','Руки':'🤜','Пресс':'🎯','Ягодицы':'🍑','Кардио':'🏃'};
 const genId = () => Date.now().toString(36) + Math.random().toString(36).substr(2,5);
 
+// Экран авторизации
 function AuthScreen() {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
     try {
-      if (isLogin) {
-        await auth.signInWithEmailAndPassword(email, password);
-      } else {
-        await auth.createUserWithEmailAndPassword(email, password);
-      }
+      if (isLogin) await auth.signInWithEmailAndPassword(email, password);
+      else await auth.createUserWithEmailAndPassword(email, password);
     } catch (err) {
-      const messages = {
-        'auth/user-not-found': 'Пользователь не найден',
-        'auth/wrong-password': 'Неверный пароль',
-        'auth/email-already-in-use': 'Email уже используется',
-        'auth/weak-password': 'Пароль слишком слабый (минимум 6 символов)',
-        'auth/invalid-email': 'Неверный формат email'
-      };
+      const messages = {'auth/user-not-found':'Пользователь не найден','auth/wrong-password':'Неверный пароль','auth/email-already-in-use':'Email уже используется','auth/weak-password':'Пароль слишком слабый (минимум 6 символов)','auth/invalid-email':'Неверный формат email'};
       setError(messages[err.code] || err.message);
     }
     setLoading(false);
   };
-
   return (
     <div className="h-full w-full bg-[#0a0a0a] flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
@@ -139,15 +143,11 @@ function AuthScreen() {
           <input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="Email" required className="w-full bg-[#151515] border border-[#333] rounded-xl px-4 py-3 text-white placeholder-zinc-600 outline-none focus:border-lime-400"/>
           <input type="password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="Пароль" required className="w-full bg-[#151515] border border-[#333] rounded-xl px-4 py-3 text-white placeholder-zinc-600 outline-none focus:border-lime-400"/>
           {error && <p className="text-red-400 text-sm text-center">{error}</p>}
-          <button type="submit" disabled={loading} className="w-full bg-lime-400 text-black font-bold py-3 rounded-xl disabled:opacity-50">
-            {loading ? 'Загрузка...' : isLogin ? 'Войти' : 'Зарегистрироваться'}
-          </button>
+          <button type="submit" disabled={loading} className="w-full bg-lime-400 text-black font-bold py-3 rounded-xl disabled:opacity-50">{loading ? 'Загрузка...' : isLogin ? 'Войти' : 'Зарегистрироваться'}</button>
         </form>
         <p className="text-center text-zinc-500 text-sm mt-6">
           {isLogin ? 'Нет аккаунта?' : 'Уже есть аккаунт?'}{' '}
-          <button onClick={()=>setIsLogin(!isLogin)} className="text-lime-400 font-semibold">
-            {isLogin ? 'Зарегистрироваться' : 'Войти'}
-          </button>
+          <button onClick={()=>setIsLogin(!isLogin)} className="text-lime-400 font-semibold">{isLogin ? 'Зарегистрироваться' : 'Войти'}</button>
         </p>
       </div>
     </div>
@@ -156,12 +156,16 @@ function AuthScreen() {
 
 function HomeScreen({ workouts, active, onStart, onResume }) {
   const thisWeek = workouts.filter(w => new Date(w.date) >= new Date(Date.now() - 7*86400000)).length;
-  const totalVol = workouts.reduce((a,w) => a + w.exercises.reduce((b,e) => b + e.sets.reduce((c,s) => c + s.weight*s.reps, 0), 0), 0);
+  const totalVol = workouts.reduce((a,w) => a + w.exercises.reduce((b,e) => {
+    if (e.type === 'cardio') return b + (e.sets.reduce((c,s) => c + (s.distance||0), 0));
+    return b + e.sets.reduce((c,s) => c + s.weight*s.reps, 0);
+  }, 0), 0);
   const templates = [
     {name:'День груди и трицепса', emoji:'🫁'},
     {name:'День спины и бицепса', emoji:'🔙'},
     {name:'День ног', emoji:'🦵'},
     {name:'День плеч', emoji:'💪'},
+    {name:'Кардио тренировка', emoji:'🏃'},
     {name:'Свободная тренировка', emoji:'🏋️'},
   ];
   return (
@@ -180,7 +184,7 @@ function HomeScreen({ workouts, active, onStart, onResume }) {
       <div className="grid grid-cols-3 gap-3 mb-6">
         <div className="bg-[#151515] rounded-2xl p-3 border border-[#222]"><p className="text-2xl font-bold text-lime-400">{thisWeek}</p><p className="text-[10px] text-zinc-500 mt-1">За неделю</p></div>
         <div className="bg-[#151515] rounded-2xl p-3 border border-[#222]"><p className="text-2xl font-bold text-white">{workouts.length}</p><p className="text-[10px] text-zinc-500 mt-1">Всего</p></div>
-        <div className="bg-[#151515] rounded-2xl p-3 border border-[#222]"><p className="text-2xl font-bold text-white">{totalVol>1000?(totalVol/1000).toFixed(0)+'т':totalVol}</p><p className="text-[10px] text-zinc-500 mt-1">Объём (кг)</p></div>
+        <div className="bg-[#151515] rounded-2xl p-3 border border-[#222]"><p className="text-2xl font-bold text-white">{totalVol>1000?(totalVol/1000).toFixed(1)+'к':totalVol}</p><p className="text-[10px] text-zinc-500 mt-1">Общий объём</p></div>
       </div>
       <h2 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-3">Быстрый старт</h2>
       <div className="space-y-2">
@@ -209,6 +213,58 @@ function HomeScreen({ workouts, active, onStart, onResume }) {
   );
 }
 
+// Компонент для силовых подходов
+function StrengthSets({ ex, ei, onUpdateSet, onAddSet }) {
+  return (
+    <>
+      <div className="px-4 py-2 grid grid-cols-[30px_1fr_1fr_40px] gap-2 text-xs text-zinc-500"><span>№</span><span className="text-center">Кг</span><span className="text-center">Повт</span><span/></div>
+      {ex.sets.map((set, si) => (
+        <div key={set.id} className="px-4 py-2 grid grid-cols-[30px_1fr_1fr_40px] gap-2 items-center border-t border-[#1a1a1a]">
+          <span className="text-xs text-zinc-500 font-medium">{si+1}</span>
+          <input type="number" value={set.weight||''} onChange={e=>onUpdateSet(ei,si,'weight',Number(e.target.value))} placeholder="0" className="bg-[#1e1e1e] border border-[#333] rounded-lg px-2 py-2 text-center text-white text-sm w-full outline-none focus:border-lime-400"/>
+          <input type="number" value={set.reps||''} onChange={e=>onUpdateSet(ei,si,'reps',Number(e.target.value))} placeholder="0" className="bg-[#1e1e1e] border border-[#333] rounded-lg px-2 py-2 text-center text-white text-sm w-full outline-none focus:border-lime-400"/>
+          <button onClick={()=>{onUpdateSet(ei,si,'completed',!set.completed); if(!set.completed) {/* rest timer */}}} className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${set.completed?'bg-lime-400 text-black':'bg-[#1e1e1e] border border-[#333] text-zinc-500'}`}>{set.completed?'✓':'○'}</button>
+        </div>
+      ))}
+      <button onClick={()=>onAddSet(ei)} className="w-full py-2.5 text-lime-400 text-xs font-semibold border-t border-[#222]">+ Добавить подход</button>
+    </>
+  );
+}
+
+// Компонент для кардио-сессий
+function CardioSets({ ex, ei, onUpdateSet, onAddSet }) {
+  return (
+    <>
+      <div className="px-4 py-2 grid grid-cols-[30px_1fr_1fr_1fr_40px] gap-1 text-xs text-zinc-500">
+        <span>№</span>
+        <span className="text-center">Время</span>
+        <span className="text-center">Дист.</span>
+        <span className="text-center">Наклон</span>
+        <span/>
+      </div>
+      {ex.sets.map((set, si) => (
+        <div key={set.id} className="px-4 py-2 grid grid-cols-[30px_1fr_1fr_1fr_40px] gap-1 items-center border-t border-[#1a1a1a]">
+          <span className="text-xs text-zinc-500 font-medium">{si+1}</span>
+          <div className="relative">
+            <input type="number" value={set.duration||''} onChange={e=>onUpdateSet(ei,si,'duration',Number(e.target.value))} placeholder="0" className="bg-[#1e1e1e] border border-[#333] rounded-lg px-1 py-2 text-center text-white text-sm w-full outline-none focus:border-lime-400 pr-6"/>
+            <span className="absolute right-1 top-1/2 -translate-y-1/2 text-[9px] text-zinc-600">мин</span>
+          </div>
+          <div className="relative">
+            <input type="number" step="0.01" value={set.distance||''} onChange={e=>onUpdateSet(ei,si,'distance',Number(e.target.value))} placeholder="0" className="bg-[#1e1e1e] border border-[#333] rounded-lg px-1 py-2 text-center text-white text-sm w-full outline-none focus:border-lime-400 pr-6"/>
+            <span className="absolute right-1 top-1/2 -translate-y-1/2 text-[9px] text-zinc-600">км</span>
+          </div>
+          <div className="relative">
+            <input type="number" value={set.incline||''} onChange={e=>onUpdateSet(ei,si,'incline',Number(e.target.value))} placeholder="0" className="bg-[#1e1e1e] border border-[#333] rounded-lg px-1 py-2 text-center text-white text-sm w-full outline-none focus:border-lime-400 pr-6"/>
+            <span className="absolute right-1 top-1/2 -translate-y-1/2 text-[9px] text-zinc-600">%</span>
+          </div>
+          <button onClick={()=>{onUpdateSet(ei,si,'completed',!set.completed)}} className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${set.completed?'bg-lime-400 text-black':'bg-[#1e1e1e] border border-[#333] text-zinc-500'}`}>{set.completed?'✓':'○'}</button>
+        </div>
+      ))}
+      <button onClick={()=>onAddSet(ei)} className="w-full py-2.5 text-lime-400 text-xs font-semibold border-t border-[#222]">+ Добавить интервал</button>
+    </>
+  );
+}
+
 function WorkoutScreen({ workout, onAddEx, onAddSet, onUpdateSet, onRemoveEx, onFinish, onCancel }) {
   const [elapsed, setElapsed] = useState(0);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -226,6 +282,16 @@ function WorkoutScreen({ workout, onAddEx, onAddSet, onUpdateSet, onRemoveEx, on
   const fmt = s => `${Math.floor(s/60).toString().padStart(2,'0')}:${(s%60).toString().padStart(2,'0')}`;
   const totalSets = workout.exercises.reduce((a,e) => a+e.sets.length, 0);
   const doneSets = workout.exercises.reduce((a,e) => a+e.sets.filter(s=>s.completed).length, 0);
+
+  // Подсчёт кардио-статистики
+  const cardioStats = workout.exercises.filter(e=>e.type==='cardio').reduce((acc, e) => {
+    e.sets.filter(s=>s.completed).forEach(s => {
+      acc.time += s.duration || 0;
+      acc.dist += s.distance || 0;
+    });
+    return acc;
+  }, {time: 0, dist: 0});
+
   return (
     <div className="flex flex-col h-full">
       <div className="bg-[#111] border-b border-[#222] px-4 pt-4 pb-3 shrink-0">
@@ -235,7 +301,19 @@ function WorkoutScreen({ workout, onAddEx, onAddSet, onUpdateSet, onRemoveEx, on
           <button onClick={()=>setShowConfirm(true)} className="text-lime-400 text-sm font-semibold">Завершить ✓</button>
         </div>
         <h2 className="text-white font-bold text-lg">{workout.name}</h2>
-        <div className="flex gap-3 mt-1"><span className="text-xs text-zinc-500">{workout.exercises.length} упр.</span><span className="text-xs text-zinc-600">•</span><span className="text-xs text-zinc-500">{doneSets}/{totalSets} подходов</span></div>
+        <div className="flex gap-3 mt-1 flex-wrap">
+          <span className="text-xs text-zinc-500">{workout.exercises.length} упр.</span>
+          <span className="text-xs text-zinc-600">•</span>
+          <span className="text-xs text-zinc-500">{doneSets}/{totalSets} подходов</span>
+          {cardioStats.dist > 0 && <>
+            <span className="text-xs text-zinc-600">•</span>
+            <span className="text-xs text-orange-400">🏃 {cardioStats.dist.toFixed(2)} км</span>
+          </>}
+          {cardioStats.time > 0 && <>
+            <span className="text-xs text-zinc-600">•</span>
+            <span className="text-xs text-orange-400">⏱ {cardioStats.time} мин</span>
+          </>}
+        </div>
       </div>
       {restTimer !== null && (
         <div className="bg-lime-400/10 border-b border-lime-400/20 px-4 py-3 flex items-center justify-between shrink-0">
@@ -252,21 +330,25 @@ function WorkoutScreen({ workout, onAddEx, onAddSet, onUpdateSet, onRemoveEx, on
         ) : (
           <div className="space-y-4">
             {workout.exercises.map((ex, ei) => (
-              <div key={ei} className="bg-[#151515] border border-[#222] rounded-2xl overflow-hidden">
+              <div key={ei} className={`border rounded-2xl overflow-hidden ${ex.type==='cardio' ? 'bg-[#151515] border-orange-500/20' : 'bg-[#151515] border-[#222]'}`}>
                 <div className="px-4 py-3 flex items-center justify-between border-b border-[#222]">
-                  <div className="flex items-center gap-2"><span className="text-lg">{mgIcons[ex.muscleGroup]}</span><div><p className="text-white font-semibold text-sm">{ex.exerciseName}</p><p className="text-zinc-500 text-xs">{ex.muscleGroup}</p></div></div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg">{mgIcons[ex.muscleGroup]}</span>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <p className="text-white font-semibold text-sm">{ex.exerciseName}</p>
+                        {ex.type==='cardio' && <span className="bg-orange-500/20 text-orange-400 text-[9px] px-1.5 py-0.5 rounded-full font-medium">КАРДИО</span>}
+                      </div>
+                      <p className="text-zinc-500 text-xs">{ex.muscleGroup}</p>
+                    </div>
+                  </div>
                   <button onClick={()=>onRemoveEx(ei)} className="text-zinc-600 text-sm">🗑</button>
                 </div>
-                <div className="px-4 py-2 grid grid-cols-[30px_1fr_1fr_40px] gap-2 text-xs text-zinc-500"><span>№</span><span className="text-center">Кг</span><span className="text-center">Повт</span><span/></div>
-                {ex.sets.map((set, si) => (
-                  <div key={set.id} className="px-4 py-2 grid grid-cols-[30px_1fr_1fr_40px] gap-2 items-center border-t border-[#1a1a1a]">
-                    <span className="text-xs text-zinc-500 font-medium">{si+1}</span>
-                    <input type="number" value={set.weight||''} onChange={e=>onUpdateSet(ei,si,'weight',Number(e.target.value))} placeholder="0" className="bg-[#1e1e1e] border border-[#333] rounded-lg px-2 py-2 text-center text-white text-sm w-full outline-none focus:border-lime-400"/>
-                    <input type="number" value={set.reps||''} onChange={e=>onUpdateSet(ei,si,'reps',Number(e.target.value))} placeholder="0" className="bg-[#1e1e1e] border border-[#333] rounded-lg px-2 py-2 text-center text-white text-sm w-full outline-none focus:border-lime-400"/>
-                    <button onClick={()=>{onUpdateSet(ei,si,'completed',!set.completed); if(!set.completed) setRestTimer(90);}} className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${set.completed?'bg-lime-400 text-black':'bg-[#1e1e1e] border border-[#333] text-zinc-500'}`}>{set.completed?'✓':'○'}</button>
-                  </div>
-                ))}
-                <button onClick={()=>onAddSet(ei)} className="w-full py-2.5 text-lime-400 text-xs font-semibold border-t border-[#222]">+ Добавить подход</button>
+                {ex.type === 'cardio' ? (
+                  <CardioSets ex={ex} ei={ei} onUpdateSet={onUpdateSet} onAddSet={onAddSet}/>
+                ) : (
+                  <StrengthSets ex={ex} ei={ei} onUpdateSet={onUpdateSet} onAddSet={onAddSet}/>
+                )}
               </div>
             ))}
           </div>
@@ -279,7 +361,14 @@ function WorkoutScreen({ workout, onAddEx, onAddSet, onUpdateSet, onRemoveEx, on
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
           <div className="bg-[#1a1a1a] rounded-2xl p-6 w-full max-w-sm border border-[#333] slide-up">
             <h3 className="text-white text-lg font-bold mb-2">Завершить тренировку?</h3>
-            <p className="text-zinc-400 text-sm mb-6">{workout.exercises.length} упражнений, {doneSets} выполненных подходов</p>
+            <p className="text-zinc-400 text-sm mb-4">{workout.exercises.length} упражнений, {doneSets} выполненных подходов</p>
+            {cardioStats.dist > 0 && (
+              <div className="bg-[#252525] rounded-xl p-3 mb-4">
+                <p className="text-orange-400 text-sm font-medium mb-1">🏃 Кардио</p>
+                <p className="text-zinc-300 text-xs">Дистанция: {cardioStats.dist.toFixed(2)} км • Время: {cardioStats.time} мин</p>
+                {cardioStats.time > 0 && <p className="text-zinc-400 text-xs">Ср. темп: {(cardioStats.time/cardioStats.dist).toFixed(1)} мин/км</p>}
+              </div>
+            )}
             <div className="flex gap-3">
               <button onClick={()=>setShowConfirm(false)} className="flex-1 bg-[#252525] text-zinc-300 py-3 rounded-xl font-medium">Отмена</button>
               <button onClick={()=>{setShowConfirm(false);onFinish();}} className="flex-1 bg-lime-400 text-black py-3 rounded-xl font-bold">Завершить</button>
@@ -294,7 +383,7 @@ function WorkoutScreen({ workout, onAddEx, onAddSet, onUpdateSet, onRemoveEx, on
 function LibraryScreen({ onSelect, onBack }) {
   const [group, setGroup] = useState('Все');
   const [search, setSearch] = useState('');
-  const groups = ['Все','Грудь','Спина','Ноги','Плечи','Руки','Пресс','Ягодицы'];
+  const groups = ['Все','Грудь','Спина','Ноги','Плечи','Руки','Пресс','Ягодицы','Кардио'];
   const filtered = exerciseLibrary.filter(e => (group==='Все'||e.mg===group) && e.name.toLowerCase().includes(search.toLowerCase()));
   return (
     <div className="flex flex-col h-full">
@@ -315,9 +404,15 @@ function LibraryScreen({ onSelect, onBack }) {
         {filtered.length===0 ? <div className="text-center py-12"><p className="text-zinc-500">Ничего не найдено</p></div> : (
           <div className="space-y-2">
             {filtered.map(ex => (
-              <button key={ex.id} onClick={()=>onSelect(ex.id)} className="w-full bg-[#151515] border border-[#222] rounded-xl p-3 flex items-center gap-3 active:bg-[#1a1a1a] active:scale-95 transition-all text-left">
+              <button key={ex.id} onClick={()=>onSelect(ex.id)} className={`w-full border rounded-xl p-3 flex items-center gap-3 active:scale-95 transition-all text-left ${ex.type==='cardio' ? 'bg-[#151515] border-orange-500/20 active:bg-[#1a1a1a]' : 'bg-[#151515] border-[#222] active:bg-[#1a1a1a]'}`}>
                 <div className="w-10 h-10 bg-[#1e1e1e] rounded-xl flex items-center justify-center text-lg shrink-0">{mgIcons[ex.mg]}</div>
-                <div className="flex-1 min-w-0"><p className="text-white font-medium text-sm truncate">{ex.name}</p><p className="text-zinc-500 text-xs">{ex.mg} • {ex.eq}</p></div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <p className="text-white font-medium text-sm truncate">{ex.name}</p>
+                    {ex.type==='cardio' && <span className="bg-orange-500/20 text-orange-400 text-[9px] px-1.5 py-0.5 rounded-full font-medium shrink-0">КАРДИО</span>}
+                  </div>
+                  <p className="text-zinc-500 text-xs">{ex.mg} • {ex.eq}</p>
+                </div>
                 <span className="text-lime-400 text-xs font-medium">+</span>
               </button>
             ))}
@@ -331,31 +426,81 @@ function LibraryScreen({ onSelect, onBack }) {
 function ProgressScreen({ workouts }) {
   const total = workouts.length;
   const totalTime = workouts.reduce((a,w)=>a+w.duration,0);
-  const totalVol = workouts.reduce((a,w)=>a+w.exercises.reduce((b,e)=>b+e.sets.reduce((c,s)=>c+s.weight*s.reps,0),0),0);
+  const totalVol = workouts.reduce((a,w)=>a+w.exercises.reduce((b,e)=>{
+    if(e.type==='cardio') return b + e.sets.reduce((c,s)=>c+(s.distance||0),0);
+    return b+e.sets.reduce((c,s)=>c+s.weight*s.reps,0);
+  },0),0);
   const totalSets = workouts.reduce((a,w)=>a+w.exercises.reduce((b,e)=>b+e.sets.length,0),0);
+
+  // Кардио статистика
+  const cardioStats = workouts.reduce((acc, w) => {
+    w.exercises.filter(e=>e.type==='cardio').forEach(e => {
+      e.sets.filter(s=>s.completed).forEach(s => {
+        acc.totalDist += s.distance || 0;
+        acc.totalTime += s.duration || 0;
+      });
+    });
+    return acc;
+  }, {totalDist: 0, totalTime: 0});
+
   const exMap = {};
   workouts.forEach(w => w.exercises.forEach(ex => {
+    if (ex.type === 'cardio') return;
     if (!exMap[ex.exerciseName]) exMap[ex.exerciseName] = {maxW:0};
     ex.sets.forEach(s => { if(s.weight > exMap[ex.exerciseName].maxW) exMap[ex.exerciseName].maxW = s.weight; });
   }));
   const records = Object.entries(exMap).map(([name,v])=>({name,...v})).sort((a,b)=>b.maxW-a.maxW).slice(0,8);
+
+  // Кардио рекорды
+  const cardioMap = {};
+  workouts.forEach(w => w.exercises.filter(e=>e.type==='cardio').forEach(ex => {
+    if (!cardioMap[ex.exerciseName]) cardioMap[ex.exerciseName] = {maxDist:0, maxTime:0};
+    ex.sets.filter(s=>s.completed).forEach(s => {
+      if ((s.distance||0) > cardioMap[ex.exerciseName].maxDist) cardioMap[ex.exerciseName].maxDist = s.distance;
+      if ((s.duration||0) > cardioMap[ex.exerciseName].maxTime) cardioMap[ex.exerciseName].maxTime = s.duration;
+    });
+  }));
+  const cardioRecords = Object.entries(cardioMap).map(([name,v])=>({name,...v}));
+
   const volData = workouts.slice(0,8).reverse().map(w => ({
     date: new Date(w.date).toLocaleDateString('ru-RU',{day:'numeric',month:'short'}),
-    vol: Math.round(w.exercises.reduce((a,e)=>a+e.sets.reduce((b,s)=>b+s.weight*s.reps,0),0))
+    vol: Math.round(w.exercises.reduce((a,e)=>{
+      if(e.type==='cardio') return a + e.sets.reduce((b,s)=>b+(s.distance||0)*100,0);
+      return a+e.sets.reduce((b,s)=>b+s.weight*s.reps,0);
+    },0))
   }));
   const maxVol = Math.max(...volData.map(d=>d.vol), 1);
+
   return (
     <div className="px-4 pt-6 pb-4">
       <h1 className="text-2xl font-bold text-white mb-6">Прогресс</h1>
       <div className="grid grid-cols-2 gap-3 mb-6">
         <div className="bg-[#151515] border border-[#222] rounded-2xl p-4"><div className="w-8 h-8 bg-lime-400/10 rounded-lg flex items-center justify-center mb-2"><span className="text-sm">🏋️</span></div><p className="text-2xl font-bold text-white">{total}</p><p className="text-xs text-zinc-500">Тренировок</p></div>
         <div className="bg-[#151515] border border-[#222] rounded-2xl p-4"><div className="w-8 h-8 bg-lime-400/10 rounded-lg flex items-center justify-center mb-2"><span className="text-sm">⏱</span></div><p className="text-2xl font-bold text-white">{totalTime}</p><p className="text-xs text-zinc-500">Минут всего</p></div>
-        <div className="bg-[#151515] border border-[#222] rounded-2xl p-4"><div className="w-8 h-8 bg-lime-400/10 rounded-lg flex items-center justify-center mb-2"><span className="text-sm">📊</span></div><p className="text-2xl font-bold text-white">{totalVol>1000?(totalVol/1000).toFixed(1)+'т':totalVol}</p><p className="text-xs text-zinc-500">Общий объём (кг)</p></div>
         <div className="bg-[#151515] border border-[#222] rounded-2xl p-4"><div className="w-8 h-8 bg-lime-400/10 rounded-lg flex items-center justify-center mb-2"><span className="text-sm">💪</span></div><p className="text-2xl font-bold text-white">{totalSets}</p><p className="text-xs text-zinc-500">Подходов</p></div>
+        <div className="bg-[#151515] border border-[#222] rounded-2xl p-4"><div className="w-8 h-8 bg-orange-400/10 rounded-lg flex items-center justify-center mb-2"><span className="text-sm">🏃</span></div><p className="text-2xl font-bold text-white">{cardioStats.totalDist.toFixed(1)}</p><p className="text-xs text-zinc-500">Км пробежено</p></div>
       </div>
+
+      {/* Кардио блок */}
+      {cardioStats.totalDist > 0 && (
+        <div className="bg-gradient-to-r from-orange-500/10 to-orange-600/5 border border-orange-500/20 rounded-2xl p-4 mb-6">
+          <h3 className="text-orange-400 font-semibold text-sm mb-3">🏃 Кардио статистика</h3>
+          <div className="grid grid-cols-2 gap-3">
+            <div><p className="text-xl font-bold text-white">{cardioStats.totalDist.toFixed(2)} км</p><p className="text-[10px] text-zinc-500">Всего дистанция</p></div>
+            <div><p className="text-xl font-bold text-white">{cardioStats.totalTime} мин</p><p className="text-[10px] text-zinc-500">Всего время</p></div>
+            {cardioStats.totalDist > 0 && cardioStats.totalTime > 0 && (
+              <>
+                <div><p className="text-xl font-bold text-white">{(cardioStats.totalTime/cardioStats.totalDist).toFixed(1)}</p><p className="text-[10px] text-zinc-500">Ср. темп (мин/км)</p></div>
+                <div><p className="text-xl font-bold text-white">{(cardioStats.totalDist / (cardioStats.totalTime/60)).toFixed(1)}</p><p className="text-[10px] text-zinc-500">Ср. скорость (км/ч)</p></div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
       {volData.length > 1 && (
         <div className="bg-[#151515] border border-[#222] rounded-2xl p-4 mb-6">
-          <h3 className="text-white font-semibold text-sm mb-4">Объём за тренировку (кг)</h3>
+          <h3 className="text-white font-semibold text-sm mb-4">Объём за тренировку</h3>
           <div className="flex items-end gap-2 h-32">
             {volData.map((d,i) => (
               <div key={i} className="flex-1 flex flex-col items-center gap-1">
@@ -367,9 +512,10 @@ function ProgressScreen({ workouts }) {
           </div>
         </div>
       )}
+
       {records.length > 0 && (
-        <div className="bg-[#151515] border border-[#222] rounded-2xl p-4">
-          <h3 className="text-white font-semibold text-sm mb-4">🏆 Личные рекорды</h3>
+        <div className="bg-[#151515] border border-[#222] rounded-2xl p-4 mb-6">
+          <h3 className="text-white font-semibold text-sm mb-4">🏆 Силовые рекорды</h3>
           <div className="space-y-2">
             {records.map((r,i) => (
               <div key={i} className="flex items-center justify-between py-2 border-b border-[#222] last:border-0">
@@ -380,6 +526,24 @@ function ProgressScreen({ workouts }) {
           </div>
         </div>
       )}
+
+      {cardioRecords.length > 0 && (
+        <div className="bg-[#151515] border border-orange-500/20 rounded-2xl p-4">
+          <h3 className="text-orange-400 font-semibold text-sm mb-4">🏃 Кардио рекорды</h3>
+          <div className="space-y-2">
+            {cardioRecords.map((r,i) => (
+              <div key={i} className="py-2 border-b border-[#222] last:border-0">
+                <p className="text-white text-sm font-medium">{r.name}</p>
+                <div className="flex gap-4 mt-1">
+                  <span className="text-zinc-400 text-xs">Макс. дистанция: <span className="text-orange-400">{r.maxDist} км</span></span>
+                  <span className="text-zinc-400 text-xs">Макс. время: <span className="text-orange-400">{r.maxTime} мин</span></span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {workouts.length===0 && <div className="text-center py-16"><div className="text-5xl mb-4">📈</div><p className="text-zinc-400 text-lg">Нет данных</p><p className="text-zinc-600 text-sm mt-1">Завершите первую тренировку</p></div>}
     </div>
   );
@@ -401,13 +565,44 @@ function HistoryScreen({ workouts, onDelete }) {
             <div key={month}>
               <h2 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">{month.charAt(0).toUpperCase()+month.slice(1)}</h2>
               <div className="space-y-3">
-                {ws.map(w => (
-                  <div key={w.id} className="bg-[#151515] border border-[#222] rounded-2xl p-4">
-                    <div className="flex justify-between mb-3"><div><h3 className="text-white font-semibold text-sm">{w.name}</h3><p className="text-zinc-500 text-xs mt-0.5">{new Date(w.date).toLocaleDateString('ru-RU',{weekday:'short',day:'numeric',month:'short'})}</p></div><button onClick={()=>onDelete(w.id)} className="text-zinc-600 text-sm p-1">🗑</button></div>
-                    <div className="space-y-1.5 mb-3">{w.exercises.map((ex,i)=>(<div key={i} className="flex items-center gap-2 text-xs"><span>{mgIcons[ex.muscleGroup]}</span><span className="text-zinc-300 flex-1 truncate">{ex.exerciseName}</span><span className="text-zinc-500">{ex.sets.filter(s=>s.completed).length}×{ex.sets.filter(s=>s.completed).length>0?Math.max(...ex.sets.filter(s=>s.completed).map(s=>s.weight))+'кг':'-'}</span></div>))}</div>
-                    <div className="flex gap-4 pt-2 border-t border-[#222]"><div className="flex items-center gap-1"><span className="text-zinc-600 text-xs">⏱</span><span className="text-zinc-400 text-xs">{w.duration} мин</span></div><div className="flex items-center gap-1"><span className="text-zinc-600 text-xs">🏋️</span><span className="text-zinc-400 text-xs">{w.exercises.length} упр.</span></div><div className="flex items-center gap-1"><span className="text-zinc-600 text-xs">📊</span><span className="text-zinc-400 text-xs">{w.exercises.reduce((a,e)=>a+e.sets.reduce((b,s)=>b+s.weight*s.reps,0),0)} кг</span></div></div>
-                  </div>
-                ))}
+                {ws.map(w => {
+                  const hasCardio = w.exercises.some(e=>e.type==='cardio');
+                  const cardioDist = w.exercises.filter(e=>e.type==='cardio').reduce((a,e)=>a+e.sets.filter(s=>s.completed).reduce((b,s)=>b+(s.distance||0),0),0);
+                  return (
+                    <div key={w.id} className={`border rounded-2xl p-4 ${hasCardio ? 'bg-[#151515] border-orange-500/10' : 'bg-[#151515] border-[#222]'}`}>
+                      <div className="flex justify-between mb-3">
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h3 className="text-white font-semibold text-sm">{w.name}</h3>
+                            {hasCardio && <span className="bg-orange-500/20 text-orange-400 text-[9px] px-1.5 py-0.5 rounded-full">КАРДИО</span>}
+                          </div>
+                          <p className="text-zinc-500 text-xs mt-0.5">{new Date(w.date).toLocaleDateString('ru-RU',{weekday:'short',day:'numeric',month:'short'})}</p>
+                        </div>
+                        <button onClick={()=>onDelete(w.id)} className="text-zinc-600 text-sm p-1">🗑</button>
+                      </div>
+                      <div className="space-y-1.5 mb-3">
+                        {w.exercises.map((ex,i)=>(
+                          <div key={i} className="flex items-center gap-2 text-xs">
+                            <span>{mgIcons[ex.muscleGroup]}</span>
+                            <span className="text-zinc-300 flex-1 truncate">{ex.exerciseName}</span>
+                            {ex.type==='cardio' ? (
+                              <span className="text-orange-400">
+                                {ex.sets.filter(s=>s.completed).reduce((a,s)=>a+(s.distance||0),0).toFixed(2)} км • {ex.sets.filter(s=>s.completed).reduce((a,s)=>a+(s.duration||0),0)} мин
+                              </span>
+                            ) : (
+                              <span className="text-zinc-500">{ex.sets.filter(s=>s.completed).length}×{ex.sets.filter(s=>s.completed).length>0?Math.max(...ex.sets.filter(s=>s.completed).map(s=>s.weight))+'кг':'-'}</span>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                      <div className="flex gap-4 pt-2 border-t border-[#222]">
+                        <div className="flex items-center gap-1"><span className="text-zinc-600 text-xs">⏱</span><span className="text-zinc-400 text-xs">{w.duration} мин</span></div>
+                        <div className="flex items-center gap-1"><span className="text-zinc-600 text-xs">🏋️</span><span className="text-zinc-400 text-xs">{w.exercises.length} упр.</span></div>
+                        {cardioDist > 0 && <div className="flex items-center gap-1"><span className="text-xs">🏃</span><span className="text-orange-400 text-xs">{cardioDist.toFixed(2)} км</span></div>}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           ))}
@@ -427,34 +622,25 @@ function App() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
-      if (user) {
-        loadWorkouts(user.uid);
-        loadActiveWorkout(user.uid);
-      }
+      if (user) { loadWorkouts(user.uid); loadActiveWorkout(user.uid); }
     });
     return () => unsubscribe();
   }, []);
 
   const loadWorkouts = async (uid) => {
     const snapshot = await db.collection('users').doc(uid).collection('workouts').orderBy('date', 'desc').get();
-    const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    setWorkouts(data);
+    setWorkouts(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
   };
 
   const loadActiveWorkout = async (uid) => {
     const doc = await db.collection('users').doc(uid).collection('active').doc('current').get();
-    if (doc.exists) {
-      setActiveWorkout(doc.data());
-    }
+    if (doc.exists) setActiveWorkout(doc.data());
   };
 
   const saveActiveWorkout = async (workout) => {
     if (!user) return;
-    if (workout) {
-      await db.collection('users').doc(user.uid).collection('active').doc('current').set(workout);
-    } else {
-      await db.collection('users').doc(user.uid).collection('active').doc('current').delete();
-    }
+    if (workout) await db.collection('users').doc(user.uid).collection('active').doc('current').set(workout);
+    else await db.collection('users').doc(user.uid).collection('active').doc('current').delete();
   };
 
   const startWorkout = (name) => {
@@ -485,7 +671,10 @@ function App() {
     if(!activeWorkout) return;
     const ex = exerciseLibrary.find(e=>e.id===exId);
     if(!ex) return;
-    const newEx = { exerciseId:ex.id, exerciseName:ex.name, muscleGroup:ex.mg, sets:[{id:genId(),weight:0,reps:0,completed:false}] };
+    const newSet = ex.type === 'cardio'
+      ? {id:genId(), duration:0, distance:0, incline:0, completed:false}
+      : {id:genId(), weight:0, reps:0, completed:false};
+    const newEx = { exerciseId:ex.id, exerciseName:ex.name, muscleGroup:ex.mg, type:ex.type, sets:[newSet] };
     const updated = {...activeWorkout, exercises:[...activeWorkout.exercises, newEx]};
     setActiveWorkout(updated);
     saveActiveWorkout(updated);
@@ -496,7 +685,11 @@ function App() {
     if(!activeWorkout) return;
     const exercises = [...activeWorkout.exercises];
     const last = exercises[ei].sets[exercises[ei].sets.length-1];
-    exercises[ei] = {...exercises[ei], sets:[...exercises[ei].sets, {id:genId(),weight:last?.weight||0,reps:last?.reps||0,completed:false}]};
+    const ex = exerciseLibrary.find(e=>e.id===exercises[ei].exerciseId);
+    const newSet = ex && ex.type === 'cardio'
+      ? {id:genId(), duration:last?.duration||0, distance:last?.distance||0, incline:last?.incline||0, completed:false}
+      : {id:genId(), weight:last?.weight||0, reps:last?.reps||0, completed:false};
+    exercises[ei] = {...exercises[ei], sets:[...exercises[ei].sets, newSet]};
     const updated = {...activeWorkout, exercises};
     setActiveWorkout(updated);
     saveActiveWorkout(updated);
@@ -529,13 +722,9 @@ function App() {
     loadWorkouts(user.uid);
   };
 
-  const logout = async () => {
-    await auth.signOut();
-  };
+  const logout = async () => { await auth.signOut(); };
 
-  if (!user) {
-    return <AuthScreen />;
-  }
+  if (!user) return <AuthScreen />;
 
   return (
     <div className="h-full w-full bg-[#0a0a0a] text-white flex flex-col overflow-hidden">
