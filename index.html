@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#0a0a0a">
 <title>GymTracker — Дневник тренировок</title>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -28,6 +31,20 @@ input[type="number"]{-moz-appearance:textfield}
 <div id="root"></div>
 <script type="text/babel">
 const { useState, useEffect } = React;
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBCg5LKO78PkxG4P-cPxH4ML8bFXP9-cjM",
+  authDomain: "gym-tracker-9ab6e.firebaseapp.com",
+  projectId: "gym-tracker-9ab6e",
+  storageBucket: "gym-tracker-9ab6e.firebasestorage.app",
+  messagingSenderId: "591148569713",
+  appId: "1:591148569713:web:2d5aea4005bfcb06bef7d0",
+  measurementId: "G-BXKE45B995"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
 const exerciseLibrary = [
   { id:'1', name:'Жим штанги лёжа', mg:'Грудь', eq:'Штанга' },
@@ -79,6 +96,63 @@ const exerciseLibrary = [
 
 const mgIcons = {'Грудь':'🫁','Спина':'🔙','Ноги':'🦵','Плечи':'💪','Руки':'🤜','Пресс':'🎯','Ягодицы':'🍑'};
 const genId = () => Date.now().toString(36) + Math.random().toString(36).substr(2,5);
+
+function AuthScreen() {
+  const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+    try {
+      if (isLogin) {
+        await auth.signInWithEmailAndPassword(email, password);
+      } else {
+        await auth.createUserWithEmailAndPassword(email, password);
+      }
+    } catch (err) {
+      const messages = {
+        'auth/user-not-found': 'Пользователь не найден',
+        'auth/wrong-password': 'Неверный пароль',
+        'auth/email-already-in-use': 'Email уже используется',
+        'auth/weak-password': 'Пароль слишком слабый (минимум 6 символов)',
+        'auth/invalid-email': 'Неверный формат email'
+      };
+      setError(messages[err.code] || err.message);
+    }
+    setLoading(false);
+  };
+
+  return (
+    <div className="h-full w-full bg-[#0a0a0a] flex items-center justify-center p-4">
+      <div className="w-full max-w-sm">
+        <div className="text-center mb-8">
+          <div className="text-6xl mb-4">🏋️</div>
+          <h1 className="text-3xl font-bold text-white mb-2">GymTracker</h1>
+          <p className="text-zinc-500 text-sm">Дневник тренировок</p>
+        </div>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="Email" required className="w-full bg-[#151515] border border-[#333] rounded-xl px-4 py-3 text-white placeholder-zinc-600 outline-none focus:border-lime-400"/>
+          <input type="password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="Пароль" required className="w-full bg-[#151515] border border-[#333] rounded-xl px-4 py-3 text-white placeholder-zinc-600 outline-none focus:border-lime-400"/>
+          {error && <p className="text-red-400 text-sm text-center">{error}</p>}
+          <button type="submit" disabled={loading} className="w-full bg-lime-400 text-black font-bold py-3 rounded-xl disabled:opacity-50">
+            {loading ? 'Загрузка...' : isLogin ? 'Войти' : 'Зарегистрироваться'}
+          </button>
+        </form>
+        <p className="text-center text-zinc-500 text-sm mt-6">
+          {isLogin ? 'Нет аккаунта?' : 'Уже есть аккаунт?'}{' '}
+          <button onClick={()=>setIsLogin(!isLogin)} className="text-lime-400 font-semibold">
+            {isLogin ? 'Зарегистрироваться' : 'Войти'}
+          </button>
+        </p>
+      </div>
+    </div>
+  );
+}
 
 function HomeScreen({ workouts, active, onStart, onResume }) {
   const thisWeek = workouts.filter(w => new Date(w.date) >= new Date(Date.now() - 7*86400000)).length;
@@ -344,28 +418,54 @@ function HistoryScreen({ workouts, onDelete }) {
 }
 
 function App() {
+  const [user, setUser] = useState(null);
   const [screen, setScreen] = useState('home');
-  const [activeWorkout, setActiveWorkout] = useState(() => {
-    const d = localStorage.getItem('gym-active');
-    return d ? JSON.parse(d) : null;
-  });
-  const [workouts, setWorkouts] = useState(() => {
-    const d = localStorage.getItem('gym-workouts');
-    return d ? JSON.parse(d) : [];
-  });
+  const [activeWorkout, setActiveWorkout] = useState(null);
+  const [workouts, setWorkouts] = useState([]);
   const [, forceUpdate] = useState(0);
-  useEffect(() => { localStorage.setItem('gym-workouts', JSON.stringify(workouts)); }, [workouts]);
+
   useEffect(() => {
-    if(activeWorkout) localStorage.setItem('gym-active', JSON.stringify(activeWorkout));
-    else localStorage.removeItem('gym-active');
-  }, [activeWorkout]);
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+      if (user) {
+        loadWorkouts(user.uid);
+        loadActiveWorkout(user.uid);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const loadWorkouts = async (uid) => {
+    const snapshot = await db.collection('users').doc(uid).collection('workouts').orderBy('date', 'desc').get();
+    const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    setWorkouts(data);
+  };
+
+  const loadActiveWorkout = async (uid) => {
+    const doc = await db.collection('users').doc(uid).collection('active').doc('current').get();
+    if (doc.exists) {
+      setActiveWorkout(doc.data());
+    }
+  };
+
+  const saveActiveWorkout = async (workout) => {
+    if (!user) return;
+    if (workout) {
+      await db.collection('users').doc(user.uid).collection('active').doc('current').set(workout);
+    } else {
+      await db.collection('users').doc(user.uid).collection('active').doc('current').delete();
+    }
+  };
+
   const startWorkout = (name) => {
     const w = { id: genId(), startTime: Date.now(), name, exercises: [] };
     setActiveWorkout(w);
+    saveActiveWorkout(w);
     setScreen('workout');
   };
-  const finishWorkout = () => {
-    if(!activeWorkout) return;
+
+  const finishWorkout = async () => {
+    if(!activeWorkout || !user) return;
     const completed = {
       id: activeWorkout.id,
       date: new Date().toISOString(),
@@ -374,10 +474,13 @@ function App() {
       duration: Math.round((Date.now()-activeWorkout.startTime)/60000),
       completed: true
     };
-    setWorkouts([completed, ...workouts]);
+    await db.collection('users').doc(user.uid).collection('workouts').doc(completed.id).set(completed);
+    await saveActiveWorkout(null);
     setActiveWorkout(null);
+    loadWorkouts(user.uid);
     setScreen('home');
   };
+
   const addExercise = (exId) => {
     if(!activeWorkout) return;
     const ex = exerciseLibrary.find(e=>e.id===exId);
@@ -385,8 +488,10 @@ function App() {
     const newEx = { exerciseId:ex.id, exerciseName:ex.name, muscleGroup:ex.mg, sets:[{id:genId(),weight:0,reps:0,completed:false}] };
     const updated = {...activeWorkout, exercises:[...activeWorkout.exercises, newEx]};
     setActiveWorkout(updated);
+    saveActiveWorkout(updated);
     forceUpdate(n=>n+1);
   };
+
   const addSet = (ei) => {
     if(!activeWorkout) return;
     const exercises = [...activeWorkout.exercises];
@@ -394,8 +499,10 @@ function App() {
     exercises[ei] = {...exercises[ei], sets:[...exercises[ei].sets, {id:genId(),weight:last?.weight||0,reps:last?.reps||0,completed:false}]};
     const updated = {...activeWorkout, exercises};
     setActiveWorkout(updated);
+    saveActiveWorkout(updated);
     forceUpdate(n=>n+1);
   };
+
   const updateSet = (ei, si, field, value) => {
     if(!activeWorkout) return;
     const exercises = [...activeWorkout.exercises];
@@ -404,22 +511,37 @@ function App() {
     exercises[ei] = {...exercises[ei], sets};
     const updated = {...activeWorkout, exercises};
     setActiveWorkout(updated);
+    saveActiveWorkout(updated);
     forceUpdate(n=>n+1);
   };
+
   const removeEx = (ei) => {
     if(!activeWorkout) return;
     const updated = {...activeWorkout, exercises:activeWorkout.exercises.filter((_,i)=>i!==ei)};
     setActiveWorkout(updated);
+    saveActiveWorkout(updated);
     forceUpdate(n=>n+1);
   };
-  const deleteWorkout = (id) => {
-    setWorkouts(workouts.filter(w=>w.id!==id));
+
+  const deleteWorkout = async (id) => {
+    if (!user) return;
+    await db.collection('users').doc(user.uid).collection('workouts').doc(id).delete();
+    loadWorkouts(user.uid);
   };
+
+  const logout = async () => {
+    await auth.signOut();
+  };
+
+  if (!user) {
+    return <AuthScreen />;
+  }
+
   return (
     <div className="h-full w-full bg-[#0a0a0a] text-white flex flex-col overflow-hidden">
       <div className="flex-1 overflow-y-auto">
         {screen==='home' && <HomeScreen workouts={workouts} active={activeWorkout} onStart={startWorkout} onResume={()=>setScreen('workout')}/>}
-        {screen==='workout' && activeWorkout && <WorkoutScreen workout={activeWorkout} onAddEx={()=>setScreen('library')} onAddSet={addSet} onUpdateSet={updateSet} onRemoveEx={removeEx} onFinish={finishWorkout} onCancel={()=>{setActiveWorkout(null);setScreen('home');}}/>}
+        {screen==='workout' && activeWorkout && <WorkoutScreen workout={activeWorkout} onAddEx={()=>setScreen('library')} onAddSet={addSet} onUpdateSet={updateSet} onRemoveEx={removeEx} onFinish={finishWorkout} onCancel={()=>{setActiveWorkout(null);saveActiveWorkout(null);setScreen('home');}}/>}
         {screen==='library' && <LibraryScreen onSelect={(id)=>{addExercise(id);setScreen('workout');}} onBack={()=>setScreen(activeWorkout?'workout':'home')}/>}
         {screen==='progress' && <ProgressScreen workouts={workouts}/>}
         {screen==='history' && <HistoryScreen workouts={workouts} onDelete={deleteWorkout}/>}
@@ -431,6 +553,10 @@ function App() {
             <span className="text-[10px] font-medium">{tab.label}</span>
           </button>
         ))}
+        <button onClick={logout} className="flex flex-col items-center py-1 px-4 rounded-xl text-zinc-500">
+          <span className="text-xl mb-0.5">🚪</span>
+          <span className="text-[10px] font-medium">Выход</span>
+        </button>
       </nav>
     </div>
   );
